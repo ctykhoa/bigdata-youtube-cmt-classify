@@ -35,7 +35,7 @@ class Job:
         # Initialize the lemmatizer
         self.wl = WordNetLemmatizer()
 
-#         self.myDb.insertVideos(self.myYoutube.getTop5MusicTrendingVideos())
+        self.myDb.insertVideos(self.myYoutube.getTop5MusicTrendingVideos())
 
     def insertNewCommentFromTopVideos(self):
         rowsToInsert = []

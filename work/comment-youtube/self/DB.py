@@ -13,31 +13,35 @@ class db:
               user ="root",
               passwd ="password"
             )
-            cursorObject = self.dataBase.cursor(dictionary=True)
+            self.cursor = self.dataBase.cursor()
             # creating database
-            cursorObject.execute("CREATE DATABASE final_project")
+            self.cursor.execute("CREATE DATABASE final_project")
+
             # creating table
             self.dataBase.database  = "final_project"
+
             commentRecord = """CREATE TABLE comments (
-                               videoId VARCHAR(30) NOT NULL,
+                               commentId  VARCHAR(30) PRIMARY KEY NOT NULL,
+                               videoId VARCHAR(30),
                                commentText TEXT,
                                isToxic INT,
-                               publishedAt TIMESTAMP,
-                               AddedToDbdAt TIMESTAMP
+                               publishedAt TIMESTAMP DEFAULT NOW(),
+                               AddedToDbdAt TIMESTAMP DEFAULT NOW()
                                )"""
             videoRecord = """CREATE TABLE videos (
-                               commentId  VARCHAR(30) NOT NULL,
-                               videoId  VARCHAR(30) NOT NULL,
+                               videoId VARCHAR(30) PRIMARY KEY NOT NULL,
                                videoTitle TEXT,
                                currentRank INT,
                                predictedRank INT,
-                               publishedAt TIMESTAMP,
-                               AddedToDbdAt TIMESTAMP
+                               publishedAt TIMESTAMP DEFAULT NOW(),
+                               AddedToDbdAt TIMESTAMP DEFAULT NOW()
                                )"""
 
             # table created
-            cursorObject.execute(commentRecord)
-            cursorObject.execute(videoRecord)
+            self.cursor.execute(commentRecord)
+            self.cursor.execute(videoRecord)
+            self.cursor.execute("SET NAMES 'UTF8MB4'")
+            self.cursor.execute("SET CHARACTER SET UTF8MB4")
 
     def connect(self):
         self.dataBase = mysql.connector.connect(
@@ -55,7 +59,7 @@ class db:
             raise Exception("db cursor failed")
 
     def insertVideos(self, videos):
-        sql = "INSERT INTO videos (videoId, videoTitle, publishedAt)\
+        sql = "INSERT IGNORE INTO videos (videoId, videoTitle, publishedAt)\
         VALUES (%s, %s, %s)"
         self.cursor.executemany(sql, videos)
         self.dataBase.commit()
