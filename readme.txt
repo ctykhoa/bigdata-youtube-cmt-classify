@@ -1,3 +1,9 @@
+### install docker and docker-compose
+## ubuntu
+https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/How-to-install-Docker-and-docker-compose-on-Ubuntu
+## windows
+https://linuxhint.com/install-docker-compose-windows/
+
 ### add youtube api key at:
 work/comment-youtube/self/youtube.py line 8 => DEVELOPER_KEY = 'xxxxxxxxxx'
 ### build and run all containers:
