@@ -109,9 +109,9 @@ services:
       - 8888:8888
       - '8945:8945'
     container_name: jupyter_notebook
-#    command: "start-notebook.sh --NotebookApp.token="
+    command: "start-notebook.sh --NotebookApp.token="
     working_dir: "/home/jovyan/work/comment-youtube/self"
-    command: "cron -f"
+#    command: "cron -f"
     networks:
       datapipeline:
         ipv4_address: 172.18.0.6

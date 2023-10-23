@@ -16,11 +16,11 @@ ENV APP_VERSION="3.3.3" \
 RUN sudo apt-get update
 RUN sudo apt-get -y install netcat
 
-RUN sudo apt-get install cron
-COPY jupyter/cron_app /etc/cron.d/cron_app
-RUN chmod 0777 /etc/cron.d/cron_app
-ADD crontab /etc/cron.d/cron_app
-RUN crontab /etc/cron.d/cron_app
+RUN #sudo apt-get install cron
+#COPY jupyter/cron_app /etc/cron.d/cron_app
+#RUN chmod 0777 /etc/cron.d/cron_app
+#ADD crontab /etc/cron.d/cron_app
+#RUN crontab /etc/cron.d/cron_app
 
 
 COPY ./requirements.txt /tmp/requirements.txt
