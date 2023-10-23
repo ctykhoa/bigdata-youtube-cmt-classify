@@ -13,6 +13,7 @@ class db:
               user ="root",
               passwd ="password"
             )
+
             self.cursor = self.dataBase.cursor()
             # creating database
             self.cursor.execute("CREATE DATABASE final_project")
@@ -50,13 +51,13 @@ class db:
           passwd ="password",
           database = "final_project"
         )
+
         try:
             self.cursor = self.dataBase.cursor()
-
             self.cursor.execute("SET NAMES 'UTF8MB4'")
             self.cursor.execute("SET CHARACTER SET UTF8MB4")
-        except:
-            raise Exception("db cursor failed")
+        except Exception as e:
+            raise Exception(e)
 
     def insertVideos(self, videos):
         sql = "INSERT IGNORE INTO videos (videoId, videoTitle, publishedAt)\

@@ -20,3 +20,15 @@ streamlit run app.py
 
 (### to run with python:
 python app.py)
+
+
+
+----
+grant user permissions mysql
+
+mysql -p (pw: pass)
+grant ALL PRIVILEGES ON final_project.* TO 'cons';
+flush privileges;
+show grants for "cons"
+
+-- if data auto fetch load the same old data -> set auto commit = true

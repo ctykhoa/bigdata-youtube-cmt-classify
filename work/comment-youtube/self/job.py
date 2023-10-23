@@ -3,6 +3,7 @@ from DB import db
 from pyspark.ml.classification import LogisticRegression, LogisticRegressionModel
 #for text pre-processing
 import re, string
+import time
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
@@ -21,6 +22,9 @@ from pyspark.ml.feature import StringIndexer, VectorIndexer, StringIndexerModel,
 from pyspark.ml.feature import VectorAssembler
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
+import json
+from kafka import KafkaProducer
+from model.comment import Comment
 
 class Job:
 
@@ -30,7 +34,7 @@ class Job:
         self.myDb = db()
         self.myYoutube = Youtube()
         self.loadedLRModel = LogisticRegressionModel.load(file_path) #LogisticRegressionModel.load(file_path)
-
+        self.producer = KafkaProducer(bootstrap_servers='kafka:9092', value_serializer=lambda v: json.dumps(v, default=str).encode('utf-8'))
         #LEMMATIZATION
         # Initialize the lemmatizer
         self.wl = WordNetLemmatizer()
@@ -50,9 +54,14 @@ class Job:
                     cmt_text = cmt[0]
                     predictionObj = self.get_prediction(cmt_text)
                     predictedLabel = int(predictionObj.collect()[0][1])
-
+                    newCmt = (cmt[2], id, cmt_text, cmt[1], predictedLabel)
                     # cmt-id, video-id, cmt-text, publish-at, is-toxic
-                    rowsToInsert.append((cmt[2], id, cmt_text, cmt[1], predictedLabel))
+                    rowsToInsert.append(newCmt)
+                    topic = 'youtube_comments'
+                    self.producer.send(topic, {'newAddedComment': Comment(newCmt).convertCommentToDict()})
+#                     while (True):
+#                         self.producer.send(topic, newCmt)
+#                         time.sleep(5)
 
         if rowsToInsert:
             self.myDb.insertComments(rowsToInsert)

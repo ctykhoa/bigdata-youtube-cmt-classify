@@ -12,3 +12,7 @@ mysql-connector-python
 nltk
 streamlit
 plotly
+flask
+dash
+dash_bootstrap_components
+pymysql

@@ -99,14 +99,19 @@ services:
     volumes:
       - ./work:/home/jovyan/work
       - bitnami-data:/bitnami
+      - ./log-cron:/cron-log
 
+    environment:
+      - FLASK_APP='/home/jovyan/work/comment-youtube/self/app.py'
+      - FLASK_DEBUG=true
     ports:
       - '8503:8501'
       - 8888:8888
-      - 5000:5000
+      - '8945:8945'
     container_name: jupyter_notebook
-    command: "start-notebook.sh --NotebookApp.token="
-
+#    command: "start-notebook.sh --NotebookApp.token="
+    working_dir: "/home/jovyan/work/comment-youtube/self"
+    command: "cron -f"
     networks:
       datapipeline:
         ipv4_address: 172.18.0.6
@@ -135,6 +140,8 @@ services:
       - '3306:3306'
     environment:
       - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=cons
+      - MYSQL_PASSWORD=pass
     volumes:
       - ./datadir:/var/lib/mysql
     networks:
