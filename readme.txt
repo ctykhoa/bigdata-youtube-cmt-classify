@@ -32,3 +32,9 @@ flush privileges;
 show grants for "cons"
 
 -- if data auto fetch load the same old data -> set auto commit = true
+
+## run app to crawl and insert data to db
+docker exec -it -u root jupyter_notebook python app.py
+
+## run dashboard
+docker exec -it -u root jupyter_notebook python cons.py
