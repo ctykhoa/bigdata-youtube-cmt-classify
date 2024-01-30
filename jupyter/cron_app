@@ -1,2 +1,0 @@
-*/1 * * * * python /home/jovyan/work/comment-youtube/self/app.py >> /cron-log/cron_log_$(date +\%Y\%m\%d).log 2>&1
-*/1 * * * * echo "ttttt" >> /cron-log/cron_log_$(date +\%Y\%m\%d).log 2>&1

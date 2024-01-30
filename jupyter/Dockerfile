@@ -14,16 +14,15 @@ ENV APP_VERSION="3.3.3" \
     SPARK_USER="spark"
 
 RUN sudo apt-get update
-RUN sudo apt-get -y install netcat
+RUN sudo apt-get -y install netcat cron
 
-RUN #sudo apt-get install cron
-#COPY jupyter/cron_app /etc/cron.d/cron_app
-#RUN chmod 0777 /etc/cron.d/cron_app
-#ADD crontab /etc/cron.d/cron_app
-#RUN crontab /etc/cron.d/cron_app
-
+#RUN touch /var/log/cron.log
+#RUN crontab -l | { cat; echo "* * * * * /opt/conda/bin/python /home/jovyan/work/comment-youtube/self/app.py >> /cron-log/cron_log_$(date +\%Y\%m\%d).log 2>&1"; } | crontab -
+#RUN crontab -l | { cat; echo "* * * * * date >> /var/log/cron.log 2>&1"; } | crontab -
+#RUN crontab -l | { cat; echo "* * * * * /home/script.sh >> /var/log/cron.log 2>&1"; } | crontab -
 
 COPY ./requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
 
-#CMD ["cron", "-f"]
+CMD ["python", "cons.py"]
+# tail -f /var/log/cron.log

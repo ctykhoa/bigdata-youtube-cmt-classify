@@ -1,0 +1,2 @@
+* * * * * python /home/jovyan/work/comment-youtube/self/app.py >> /var/log/cron.log 2>&1
+* * * * * date >> /var/log/cron.log 2>&1

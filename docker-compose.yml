@@ -25,8 +25,6 @@ services:
     volumes:
       - bitnami-data:/opt/bitnami
       - ./project-data:/home
-#      - /opt/spark/conf/spark-defaults.conf:/opt/bitnami/spark/conf/spark-defaults.conf
-#      - /opt/spark/jars:/opt/bitnami/spark/ivy:z
     networks:
       datapipeline:
         ipv4_address: 172.18.0.2
@@ -63,39 +61,10 @@ services:
     networks:
       datapipeline:
         ipv4_address: 172.18.0.4
-
-#  cassandra:
-#    image: 'bitnami/cassandra:latest'
-#    container_name: cassandra
-#    hostname: cassandra
-#    ports:
-#      - '9042:9042'
-#    volumes:
-#      - ./project-data:/home
-#    networks:
-#      datapipeline:
-#        ipv4_address: 172.18.0.5
-
-#  streamlit-app:
-#    image: 'aminehy/docker-streamlit-app@sha256:b8dbc8ea8915538521730e32f48ce9b8a62a924290a38754a61109f9068049e5'
-#    container_name: streamlit-app
-#    hostname: streamlit-app
-#    ports:
-#      - '8501:8501'
-#      - '8081:8080'
-#    volumes:
-#      - ./work/abalone-age-app-master:/app
-##      - ./work/streamlit-app:/app
-#    networks:
-#      datapipeline:
-#        ipv4_address: 172.18.0.7
-
   jupyter:
     build:
       context: .
       dockerfile: ./jupyter/Dockerfile
-#      args:
-#        PYTHON_VERSION: 3.10
     volumes:
       - ./work:/home/jovyan/work
       - bitnami-data:/bitnami
@@ -109,28 +78,12 @@ services:
       - 8888:8888
       - '8945:8945'
     container_name: jupyter_notebook
-    command: "start-notebook.sh --NotebookApp.token="
+#    command: "start-notebook.sh --NotebookApp.token="
     working_dir: "/home/jovyan/work/comment-youtube/self"
 #    command: "cron -f"
     networks:
       datapipeline:
         ipv4_address: 172.18.0.6
-
-#  docano:
-#    image: 'doccano/doccano'
-#    container_name: docano-app
-#    hostname: docano-app
-#    ports:
-#      - '8502:8000'
-#    environment:
-#      - ADMIN_USERNAME=admin
-#      - ADMIN_EMAIL=admin@example.com
-#      - ADMIN_PASSWORD=password
-#    volumes:
-#      - ./doccano-db:/data
-#    networks:
-#      datapipeline:
-#        ipv4_address: 172.18.0.8
 
   mysql:
     image: 'mysql:5.7.16'

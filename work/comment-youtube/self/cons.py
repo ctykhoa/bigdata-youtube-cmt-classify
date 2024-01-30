@@ -82,8 +82,3 @@ def update_table(n):
 # Run the application
 if __name__ == '__main__':
     app.run_server(debug=True, host="0.0.0.0", port="8945")
-
-   # dash.exceptions.invalidcallbackreturnvalue: The callback for `<Output `youtube_video_comments_tbl.data`>` returned a value having type
-    #`DataFrame` which is not JSON serializable. The value in question is either the only value returned,
-     #or is in the top level of the returned list, and has string representation
-     #` commentId videoId ... AddedToDbdAt videoTitle 0 Ugw-iY32u8oNbyqmjt14AaABAg b_rpj_nMWBI ... 2023-10-22 09:33:50 Lil Mabu x ChriseanRock - MR. TAKE YA B*TCH (O... 1 Ugw0UYEgBniITnSzIgp4AaABAg 83Lv790h79k ... 2023-10-21 15:55:13 The Kid LAROI, Jung Kook, Central Cee - TOO MU... 2 Ugw11y6C652TmkPfWEV4AaABAg b_rpj_nMWBI ... 2023-10-21 15:15:43 Lil Mabu x ChriseanRock - MR. TAKE YA B*TCH (O... 3 Ugw2r4CbtbOQJW6-Hfl4AaABAg qWL7Iy7jhKc ... 2023-10-21 15:55:13 BAD BUNNY - NADIE SABE (Visualizer) | nadie s... 4 Ugw35UG9ce2DZlkkA1d4AaABAg _PJvpq8uOZM ... 2023-10-21 15:15:43 BAD BUNNY - MONACO (Official Video) | nadie sa... .. ... ... ... ... ... 120 UgzlqPUAKc3C6XbZgBd4AaABAg 83Lv790h79k ... 2023-10-21 15:21:37 The Kid LAROI, Jung Kook, Central Cee - TOO MU... 121 UgzMoou3YBtc002YpIB4AaABAg 83Lv790h79k ... 2023-10-21 15:15:43 The Kid LAROI, Jung Kook, Central Cee - TOO MU... 122 UgzmtA6DADrPyRyfU054AaABAg 83Lv790h79k ... 2023-10-21 15:21:37 The Kid LAROI, Jung Kook, Central Cee - TOO MU... 123 Ugzs0wBKaMpGAAVB0Wl4AaABAg 83Lv790h79k ... 2023-10-22 09:36:58 The Kid LAROI, Jung Kook, Central Cee - TOO MU..
