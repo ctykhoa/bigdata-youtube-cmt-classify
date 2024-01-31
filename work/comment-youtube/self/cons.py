@@ -19,16 +19,6 @@ consumer = KafkaConsumer('youtube_comments', bootstrap_servers='kafka:9092', val
 # for message in consumer:
 #     print (message.value)
 
-
-
-# Connect to the mysql database
-# conn = mysql.connector.connect(
-#           host ="mysql",
-#           user ="root",
-#           passwd ="password",
-#           database = "final_project"
-#         )
-
 # Retrieve data from the materialized view using pandas
 commentQueryText = "SELECT VIDEOs.videoTitle , COMMENTS.commentText, COMMENTS.publishedAt, CASE when isToxic = 1 then 'Yes' else 'No' END as isToxicComment FROM COMMENTS JOIN VIDEOs on comments.videoId = videos.videoId ORDER BY publishedAt DESC"
  # LIMIT 10"
@@ -42,7 +32,6 @@ predicted_df = pd.read_sql(text(predictedQueryText), conn)
 
 # Create a Dash application
 dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css"
-# app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP, dbc_css])
 app = dash.Dash(__name__)
 # Define layout
 app.layout = html.Div(
