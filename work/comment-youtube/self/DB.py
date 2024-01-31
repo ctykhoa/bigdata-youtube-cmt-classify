@@ -87,6 +87,16 @@ class db:
 
         return videoIds
 
+
+    def getPredictedNextTop5Videos(self):
+        predictedTop5Titles = []
+        self.cursor.execute("select c.videoId, v.videoTitle, count(commentId) as total_non_toxic_comment, (select count(commentId) from comments) as top5_total_comment, (count(commentId)/(select count(commentId) from comments))*100 as percentage from comments c join videos v on c.videoId = v.videoId where IsToxic = 0 group by videoId order by count(commentId) desc limit 5;")
+        results = self.cursor.fetchall()
+        for row in results:
+            predictedTop5Titles.append(row[1]) # video title
+
+        return predictedTop5Titles
+
     def getLatestCommentTimestamp(self, videoId):
         timestamp = self.cursor.execute("SELECT publishedAt FROM comments WHERE videoId = %s ORDER BY publishedAt DESC LIMIT 1", (videoId,))
         rows = self.cursor.fetchall()

@@ -35,6 +35,11 @@ commentQueryText = "SELECT VIDEOs.videoTitle , COMMENTS.commentText, COMMENTS.pu
 df = pd.read_sql(text(commentQueryText), conn)
 # df['isToxicComment'] = 'Yes' if df['isToxic'] == 1 else 'No'
 
+# prediction
+predictedQueryText = "select c.videoId, v.videoTitle, count(commentId) as total_non_toxic_comment, (select count(commentId) from comments) as top5_total_comment, (count(commentId)/(select count(commentId) from comments))*100 as percentage from comments c join videos v on c.videoId = v.videoId where IsToxic = 0 group by videoId order by count(commentId) desc limit 5;"
+ # LIMIT 10"
+predicted_df = pd.read_sql(text(predictedQueryText), conn)
+
 # Create a Dash application
 dbc_css = "https://cdn.jsdelivr.net/gh/AnnMarieW/dash-bootstrap-templates/dbc.min.css"
 # app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP, dbc_css])
@@ -65,7 +70,12 @@ app.layout = html.Div(
     dcc.Graph(
         id="youtube_video_comments_graph",
         figure = px.histogram(df, x="videoTitle", y="commentText", color="isToxicComment", barmode="group", histfunc='count')
-    )
+    ),
+    html.H1("Predicted next top 5 trending music videos"),
+    dcc.Graph(
+        id="youtube_predicted_top_5_graph",
+        figure = px.histogram(predicted_df, x="videoTitle", y="percentage", color="videoTitle")
+    ),
 ])
 
 @callback(Output('youtube_video_comments_tbl_out', 'children'), Input('youtube_video_comments_tbl', 'active_cell'))
