@@ -38,3 +38,12 @@ docker exec -it -u root jupyter_notebook python app.py
 
 ## run dashboard
 docker exec -it -u root jupyter_notebook python cons.py
+
+## list topic
+# access to kafka container:
+$docker exec -it -u root kafka bash
+
+$/opt/bitnami/kafka/bin/kafka-topics.sh --list --bootstrap-server 172.18.0.4:9092
+
+## subscribe
+/opt/bitnami/kafka/bin/kafka-console-consumer.sh --bootstrap-server 172.18.0.4:9092 --topic youtube_comments --from-beginning
